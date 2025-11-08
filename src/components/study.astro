@@ -1,0 +1,15 @@
+---
+const { study } = Astro.props;
+const { title, organisation, organisation_link, certification_link, date } = study.data;
+---
+<article>
+    <h3 class="qualification-title"><a href={certification_link}>{ title }</a></h3>
+    <a class="issuer-name" href={organisation_link}>{ organisation }</a> 
+    <span class="issue-date">{ date }</span>
+</article>
+<style>
+    article { display: grid; column-gap: 1ch; row-gap: 0; grid-template-columns: auto 1fr; align-items: baseline; }
+    .qualification-title { font-size: var(--base-size); font-weight: 700; grid-column: 1 / span 2;}
+    .issue-date::before { content:'—'; margin-right: 1ch; }
+    .issue-date { font-weight: 300; }
+</style>

@@ -1,0 +1,11 @@
+---
+import { getCollection } from 'astro:content';
+import Job from './job.astro';
+const jobs = await getCollection('jobs');
+---
+<section>
+    <h2>Professional history</h2>
+    { jobs
+        .sort((a,b) => a.id < b.id ? 1 : -1 )
+        .map((j) => <Job job={j} />) }
+</section>

@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import Study from './study.astro';
+const studies = await getCollection('studies');
+---
+<section>
+    <h2>Education</h2>
+    { studies
+        .sort((a,b) => a.id < b.id ? 1 : -1 )
+        .map((s) => <Study study={s}/>) }
+</section>
+<style>
+    h2 { margin-bottom: var(--base-size); }
+    section { row-gap: var(--base-size); }
+</style>

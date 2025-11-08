@@ -1,0 +1,30 @@
+---
+import { render } from 'astro:content';
+const { job } = Astro.props;
+const { jobtitle, company, link, from, to, stack } = job.data;
+const { Content } = await render(job);
+---
+<article>
+    <div class="job-info">
+        <h3 class="job-title">{ jobtitle }</h3>
+        <a class="employer" href={link}>{ company }</a>
+        <span class="start-date">{ from }</span>
+        <span class="end-date">{ to }</span>
+    </div>
+    <div class="achievements">
+        <Content />
+    </div>
+    <ul class="tech-stack">{ stack.map((tech:string) => <li>{ tech }</li>) }</ul>
+</article>
+<style>
+    .job-info { display: flex; flex-direction: row; gap:1ch; align-items: baseline; }
+    .job-title::after { content: '—'; margin-left: 1ch; }
+    .employer { font-size: var(--base-size); font-weight: 700; flex: auto; }
+    .start-date::after { content: '—'; margin-left: 1ch; }
+    .start-date, .end-date { font-weight: 700; }
+
+    .tech-stack { margin: 0; padding: 0; display: flex; flex-direction: row; gap:1ch; list-style-type: none; flex-wrap: wrap; font-weight: 300; }
+    li:first-of-type::before { content:'Tech stack:'; }
+    li:not(:first-of-type)::before { content: '·'; }
+    li { display: flex; flex-direction: row; gap: 1ch; align-items: center; font-size: inherit; }
+</style>

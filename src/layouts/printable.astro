@@ -1,0 +1,43 @@
+---
+import Icon from '../components/icon.astro';
+interface Props { language:string, keywords:string, title:string };
+const { language, keywords, title } = Astro.props;
+---
+<html lang={language}>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="keywords" content={keywords}>
+        <title>{title}</title>
+    </head>
+    <body>
+        <main>
+            <slot/>
+        </main>
+        <button onclick="window.print();"><Icon symbol="printer"/> Print</button>
+    </body>
+</html>
+<style>
+    :root {
+        --page-margins: 7.5rem;
+    }
+
+    @media screen {
+        html { background-color: #444; margin: 0; padding: 0; }
+        body { margin: 0; padding: 0; }
+        main { background-color: #fff; margin: var(--large-size) auto; box-sizing: border-box; width: 210mm; min-height: 297mm; padding: var(--page-margins); }
+        .row:nth-child(even) { background-color: #f0f2; }
+    }
+    @media print {
+        @page { padding: var(--page-margins); }
+        button { display: none; visibility: hidden; z-index: 10;}
+    }
+
+    button { position: sticky; top: auto; right: var(--largest-size); bottom: var(--larger-size); left: calc( 100vw - 12rem );
+        background-color: hsl(165, 80%, 80%); color: hsl(165, 80%, 20%); border: 1px solid hsl(165, 80%, 20%); box-shadow: 0 4px 10px hsla(165, 80%, 10%, 50%); 
+        padding: var(--base-size); border-radius: var(--base-size); transition: box-shadow 40ms linear; text-transform: uppercase; display: inline-flex; gap: 1ch; align-items: center; }
+    button:hover { background-color: hsl(165, 80%, 85%); color: hsl(165, 80%, 25%); border: 1px solid hsl(165, 80%, 25%); box-shadow: 0 6px 14px hsla(165, 80%, 10%, 50%); }
+    button:active { background-color: hsl(165, 80%, 75%); color: hsl(165, 80%, 15%); border: 1px solid hsl(165, 80%, 15%); box-shadow: 0 1px 2px hsla(165, 80%, 10%, 100%); }
+    button:focus { outline: hsl(165, 90%, 40%) solid 2px; }
+</style>

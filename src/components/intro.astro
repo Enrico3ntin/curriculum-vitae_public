@@ -1,0 +1,26 @@
+---
+import Icon from './icon.astro';
+import { getEntry, render } from 'astro:content';
+const intro = await getEntry('intro', 'index');
+const { fullname, link, profession, email, phone, location } = intro.data;
+const { Content } = await render(intro);
+---
+<section>
+    <a class="full-name" href={link}><h1>{ fullname }</h1></a>
+    <span class="job-title">{ profession }</span>
+    <div class="intro">
+        <Content />
+    </div>
+    <ul class="contact-details">
+        <li><Icon symbol="email"/><a class="email-address" href={`mailto:${email}`}>{ email }</a></li>
+        <li><Icon symbol="phone"/><span class="phone-number">{ phone }</span></li>
+        <li><Icon symbol="location"/><span class="location">{ location }</span></li>
+    </ul>
+</section>
+<style>
+    section { row-gap: var(--small-size); position: relative; }
+    h1 { margin: 0; padding: 0; line-height: var(--larger-size); }
+    .job-title { font-size: 1.25rem; line-height: var(--large-size); font-weight: 700; text-transform: uppercase; }
+    .contact-details { margin: 0; padding: 0; display: flex; flex-direction: column; list-style-type: none; position: absolute; right: 0; }
+    li { display: flex; flex-direction: row; gap: 1ch; align-items: center; }
+</style>
